@@ -1,0 +1,183 @@
+@import "tailwindcss";
+
+/* ============================================================
+   Tits n' Cards — design system
+   Dark "epic game" theme: Blizzard/WoW fantasy + One Piece pirate
+   ============================================================ */
+
+@theme {
+  /* Fonts (wired in layout.tsx via next/font) */
+  --font-display: var(--font-cinzel), Georgia, serif;
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+
+  /* Core surfaces */
+  --color-abyss: #070b16;
+  --color-abyss-light: #0d1322;
+  --color-panel: #121a2e;
+  --color-panel-light: #1a2540;
+  --color-hairline: #2a3a5c;
+
+  /* Text */
+  --color-ink: #eaedf6;
+  --color-muted: #97a1bb;
+
+  /* Parchment (card faces / accents) */
+  --color-parchment: #ece0c4;
+  --color-parchment-dark: #c9ba94;
+
+  /* Gold accents */
+  --color-gold: #d4af37;
+  --color-gold-bright: #f6d765;
+  --color-gold-deep: #9c7a1e;
+
+  /* Pirate red / sea */
+  --color-crimson: #b21e2f;
+  --color-crimson-bright: #e8455a;
+  --color-sea: #2a8c9c;
+  --color-sea-bright: #4fd0e0;
+
+  /* Market signals */
+  --color-up: #34d399;
+  --color-down: #f87171;
+
+  /* TCG color identities */
+  --color-tcg-red: #e0443f;
+  --color-tcg-green: #34b06a;
+  --color-tcg-blue: #3b87e0;
+  --color-tcg-purple: #9a6cf0;
+  --color-tcg-black: #6b7687;
+  --color-tcg-yellow: #ecc02e;
+
+  /* Animations */
+  --animate-shimmer: shimmer 3s linear infinite;
+  --animate-float: float 6s ease-in-out infinite;
+  --animate-pulse-glow: pulseGlow 3s ease-in-out infinite;
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+@keyframes pulseGlow {
+  0%, 100% { opacity: 0.55; }
+  50% { opacity: 1; }
+}
+
+/* ---------------- Base ---------------- */
+html {
+  color-scheme: dark;
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--color-abyss);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  /* layered atmospheric backdrop */
+  background-image:
+    radial-gradient(900px 600px at 12% -10%, rgba(212, 175, 55, 0.10), transparent 60%),
+    radial-gradient(1000px 700px at 100% 0%, rgba(42, 140, 156, 0.12), transparent 55%),
+    radial-gradient(700px 500px at 50% 120%, rgba(178, 30, 47, 0.10), transparent 60%),
+    linear-gradient(180deg, #070b16 0%, #060912 100%);
+  background-attachment: fixed;
+  min-height: 100vh;
+}
+
+::selection {
+  background: var(--color-gold);
+  color: #1a1405;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar { width: 11px; height: 11px; }
+::-webkit-scrollbar-track { background: #0a0f1d; }
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #2a3a5c, #1a2540);
+  border-radius: 6px;
+  border: 2px solid #0a0f1d;
+}
+::-webkit-scrollbar-thumb:hover { background: var(--color-gold-deep); }
+
+/* ---------------- Utilities ---------------- */
+@layer utilities {
+  .font-display { font-family: var(--font-display); }
+
+  .text-glow-gold {
+    text-shadow: 0 0 18px rgba(246, 215, 101, 0.45), 0 1px 2px rgba(0, 0, 0, 0.6);
+  }
+  .text-glow-sea {
+    text-shadow: 0 0 18px rgba(79, 208, 224, 0.45);
+  }
+
+  /* Gold gradient text for big headings */
+  .text-gold-gradient {
+    background: linear-gradient(180deg, #fbe7a8 0%, #e8c454 45%, #b8891f 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+  }
+
+  /* Ornate panel surface */
+  .panel {
+    background: linear-gradient(180deg, rgba(26, 37, 64, 0.65), rgba(18, 26, 46, 0.85));
+    border: 1px solid var(--color-hairline);
+    border-radius: 0.75rem;
+    backdrop-filter: blur(6px);
+  }
+
+  /* Gold-framed surface */
+  .frame-gold {
+    border: 1px solid rgba(212, 175, 55, 0.55);
+    box-shadow:
+      inset 0 0 0 1px rgba(212, 175, 55, 0.12),
+      0 10px 30px -10px rgba(0, 0, 0, 0.7);
+  }
+
+  .glow-gold {
+    box-shadow: 0 0 0 1px rgba(212, 175, 55, 0.4), 0 0 28px -6px rgba(246, 215, 101, 0.5);
+  }
+  .glow-hover {
+    transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+  }
+  .glow-hover:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 14px 40px -14px rgba(246, 215, 101, 0.55);
+    border-color: rgba(212, 175, 55, 0.6);
+  }
+
+  /* Foil shimmer for rare items */
+  .foil {
+    background-image: linear-gradient(
+      110deg,
+      transparent 20%,
+      rgba(255, 255, 255, 0.18) 40%,
+      rgba(246, 215, 101, 0.35) 50%,
+      rgba(255, 255, 255, 0.18) 60%,
+      transparent 80%
+    );
+    background-size: 200% 100%;
+    animation: var(--animate-shimmer);
+  }
+
+  /* Hairline gold divider */
+  .rule-gold {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.7), transparent);
+  }
+
+  .clip-banner {
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 50% 86%, 0 100%);
+  }
+
+  .bg-grid {
+    background-image:
+      linear-gradient(rgba(212, 175, 55, 0.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(212, 175, 55, 0.05) 1px, transparent 1px);
+    background-size: 40px 40px;
+  }
+}
