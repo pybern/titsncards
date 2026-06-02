@@ -14,6 +14,7 @@ import { MoverCard } from "@/components/market/MoverCard";
 import { CardArt } from "@/components/catalog/CardArt";
 import { RarityBadge } from "@/components/ui/Badge";
 import { formatUSD, formatPct, pctClass, formatDate, cn } from "@/lib/utils";
+import { marketMetadata } from "@/lib/seo";
 
 export function generateStaticParams() {
   return getTrackerProducts().map((p) => ({ slug: p.slug }));
@@ -27,10 +28,7 @@ export async function generateMetadata({
   const { slug } = await params;
   const product = getProduct(slug);
   if (!product) return { title: "Not found" };
-  return {
-    title: `${product.name} — Price History`,
-    description: `Track the market price, bids, and asks for ${product.name} (${product.releaseCode}).`,
-  };
+  return marketMetadata(product);
 }
 
 export default async function MarketDetailPage({

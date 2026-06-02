@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import {
@@ -26,6 +27,14 @@ import { Button } from "@/components/ui/Button";
 import { BannerRibbon } from "@/components/ui/Panel";
 import { CardArt } from "@/components/catalog/CardArt";
 import { formatUSD, formatPct, pctClass, cn } from "@/lib/utils";
+import { createMetadata } from "@/lib/seo";
+
+export const metadata: Metadata = createMetadata({
+  title: "One Piece TCG Marketplace",
+  description:
+    "Buy sealed One Piece TCG boxes, chase singles, and track OP, PRB, and SPC market prices from one player-built marketplace.",
+  path: "/",
+});
 
 const emblemSrc: Record<string, string> = {
   OP: "/img/emblem-op.webp",

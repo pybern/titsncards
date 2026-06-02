@@ -11,6 +11,7 @@ import {
 } from "@/lib/catalog";
 import { FilterableGrid } from "@/components/catalog/FilterableGrid";
 import { formatDate } from "@/lib/utils";
+import { releaseMetadata } from "@/lib/seo";
 
 const emblemSrc: Record<string, string> = {
   OP: "/img/emblem-op.webp",
@@ -30,10 +31,7 @@ export async function generateMetadata({
   const { code } = await params;
   const release = getRelease(code);
   if (!release) return { title: "Release not found" };
-  return {
-    title: `${release.name} (${release.code})`,
-    description: release.description,
-  };
+  return releaseMetadata(release);
 }
 
 export default async function ReleasePage({

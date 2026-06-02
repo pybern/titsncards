@@ -21,6 +21,8 @@ import { Sparkline } from "@/components/market/Sparkline";
 import { RarityBadge, ColorPill } from "@/components/ui/Badge";
 import { BannerRibbon } from "@/components/ui/Panel";
 import { formatUSD, formatPct, pctClass, cn } from "@/lib/utils";
+import { JsonLd } from "@/components/seo/JsonLd";
+import { productJsonLd, productMetadata } from "@/lib/seo";
 
 export function generateStaticParams() {
   return getAllProducts().map((p) => ({ slug: p.slug }));
@@ -34,10 +36,7 @@ export async function generateMetadata({
   const { slug } = await params;
   const product = getProduct(slug);
   if (!product) return { title: "Not found" };
-  return {
-    title: `${product.name} · ${product.releaseCode}`,
-    description: product.description,
-  };
+  return productMetadata(product);
 }
 
 export default async function ProductPage({
@@ -56,6 +55,7 @@ export default async function ProductPage({
 
   return (
     <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6">
+      <JsonLd data={productJsonLd(product)} />
       {/* breadcrumb */}
       <nav className="mb-6 flex flex-wrap items-center gap-1.5 text-sm text-muted">
         <Link href="/releases" className="hover:text-gold-bright">

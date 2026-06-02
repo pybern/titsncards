@@ -23,7 +23,7 @@ export function ReleaseCard({
     <Link
       href={`/releases/${release.code}`}
       className={cn(
-        "panel glow-hover group relative flex flex-col overflow-hidden",
+        "panel glow-hover group relative flex flex-col overflow-hidden p-5",
         className,
       )}
     >
