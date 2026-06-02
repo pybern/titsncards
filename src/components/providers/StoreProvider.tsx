@@ -14,9 +14,16 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
   const [hydrated, setHydrated] = useState(false);
 
   useEffect(() => {
+    let active = true;
     // Manually rehydrate the persisted store (skipHydration: true).
-    useStore.persist.rehydrate();
-    setHydrated(true);
+    // Resolve the returned promise so setState happens asynchronously
+    // (outside the synchronous effect body).
+    Promise.resolve(useStore.persist.rehydrate()).then(() => {
+      if (active) setHydrated(true);
+    });
+    return () => {
+      active = false;
+    };
   }, []);
 
   return (
