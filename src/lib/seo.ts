@@ -2,19 +2,14 @@ import type { Metadata } from "next";
 import type { Product, Release } from "@/lib/types";
 import { formatUSD } from "@/lib/utils";
 
-const FALLBACK_SITE_URL = "http://localhost:3000";
-
-function withProtocol(url: string): string {
-  return /^https?:\/\//i.test(url) ? url : `https://${url}`;
-}
+export const siteDomains = {
+  canonical: "https://www.titsncards.com",
+  apex: "https://titsncards.com",
+  vercel: "https://titsncards.vercel.app",
+} as const;
 
 export function getSiteUrl(): string {
-  return withProtocol(
-    process.env.NEXT_PUBLIC_SITE_URL ??
-      process.env.VERCEL_PROJECT_PRODUCTION_URL ??
-      process.env.VERCEL_URL ??
-      FALLBACK_SITE_URL,
-  ).replace(/\/$/, "");
+  return siteDomains.canonical;
 }
 
 export const siteConfig = {
@@ -24,6 +19,7 @@ export const siteConfig = {
     "Buy, sell, and track One Piece Card Game singles and sealed product across OP, PRB, and SPC releases with live-style pricing.",
   locale: "en_US",
   defaultImage: "/opengraph-image",
+  domains: siteDomains,
   keywords: [
     "One Piece Card Game",
     "One Piece TCG",
@@ -164,6 +160,7 @@ export function siteJsonLd() {
       name: siteConfig.name,
       url: absoluteUrl("/"),
       logo: absoluteUrl("/favicon.ico"),
+      sameAs: [siteDomains.apex, siteDomains.vercel],
     },
     {
       "@context": "https://schema.org",
