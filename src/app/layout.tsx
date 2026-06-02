@@ -6,6 +6,8 @@ import { SiteFooter } from "@/components/layout/SiteFooter";
 import { StoreProvider } from "@/components/providers/StoreProvider";
 import { CartDrawer } from "@/components/cart/CartDrawer";
 import { ToastViewport } from "@/components/ui/Toast";
+import { JsonLd } from "@/components/seo/JsonLd";
+import { createMetadata, getSiteUrl, siteConfig, siteJsonLd } from "@/lib/seo";
 
 const cinzel = Cinzel({
   variable: "--font-cinzel",
@@ -21,20 +23,17 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(getSiteUrl()),
   title: {
-    default: "Tits n' Cards — One Piece TCG Marketplace",
+    default: siteConfig.title,
     template: "%s · Tits n' Cards",
   },
-  description:
-    "Buy, sell, and track One Piece Card Game singles and sealed product. Built by players, for players. OP, PRB & SPC releases, live-style price history, and a battle-ready marketplace.",
-  keywords: [
-    "One Piece Card Game",
-    "OPTCG",
-    "TCG marketplace",
-    "buy cards",
-    "sell cards",
-    "price tracker",
-  ],
+  ...createMetadata(),
+  applicationName: siteConfig.name,
+  authors: [{ name: siteConfig.name }],
+  creator: siteConfig.name,
+  publisher: siteConfig.name,
+  category: "trading card marketplace",
 };
 
 export default function RootLayout({
@@ -49,6 +48,7 @@ export default function RootLayout({
     >
       <body className="flex min-h-full flex-col">
         <StoreProvider>
+          <JsonLd data={siteJsonLd()} />
           <SiteHeader />
           <main className="flex-1">{children}</main>
           <SiteFooter />

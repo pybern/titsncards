@@ -4,12 +4,15 @@ import { TrendingUp, TrendingDown } from "lucide-react";
 import { getTrackerProducts, getMovers } from "@/lib/catalog";
 import { MarketTable } from "@/components/market/MarketTable";
 import { MoverCard } from "@/components/market/MoverCard";
+import { createMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = createMetadata({
   title: "Market — Price Tracker",
   description:
     "Live-style price tracking for One Piece TCG singles and sealed product. Last sales, bids, asks, and full history — StockX for pirates.",
-};
+  path: "/market",
+  image: "/img/market-banner.webp",
+});
 
 export default function MarketPage() {
   const tracked = getTrackerProducts();

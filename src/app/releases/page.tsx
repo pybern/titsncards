@@ -3,12 +3,14 @@ import Image from "next/image";
 import { getReleasesByLine, lineMeta, lineOrder } from "@/lib/catalog";
 import { ReleaseCard } from "@/components/catalog/ReleaseCard";
 import type { Line } from "@/lib/types";
+import { createMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = createMetadata({
   title: "Releases",
   description:
     "Browse every One Piece Card Game release — OP booster sets, PRB premium boosters, and the SPC Super Premium Collection.",
-};
+  path: "/releases",
+});
 
 const emblemSrc: Record<string, string> = {
   OP: "/img/emblem-op.webp",

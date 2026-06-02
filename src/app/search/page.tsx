@@ -4,11 +4,14 @@ import { searchProducts } from "@/lib/catalog";
 import { FilterableGrid } from "@/components/catalog/FilterableGrid";
 import { EmptyState } from "@/components/ui/EmptyState";
 import { Button } from "@/components/ui/Button";
+import { createMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = createMetadata({
   title: "Search",
-  description: "Search the Tits n' Cards catalog.",
-};
+  description: "Search One Piece TCG singles, sealed products, set codes, rarities, colors, and marketplace listings.",
+  path: "/search",
+  noIndex: true,
+});
 
 export default async function SearchPage({
   searchParams,
